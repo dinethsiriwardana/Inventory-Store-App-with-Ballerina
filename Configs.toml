@@ -1,0 +1,3 @@
+host = "mysql8-service"
+port = 3306
+databaseName = "storedb"

@@ -1,0 +1,3 @@
+resources:
+- mysql_deployment.yml
+- target/kubernetes/inventory_store/inventory_store.yaml
