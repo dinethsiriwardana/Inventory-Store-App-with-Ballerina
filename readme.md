@@ -100,22 +100,25 @@ Defines a service running on port 9090 with a MySQL client.
 
 ## CLI Commands
 
-### Build and Run
+### Build and Deploy
 
 ```bash
-# Build Ballerina Project
-ballerina build
+# Build Ballerina Project and Generate Kubernetes Configuration
+bal build --cloud=k8s
 
-# Run Ballerina Project
-ballerina run main.bal
+# Push Docker Image to Repository
+docker push dinethsiriwardana/invenroty_app:0.1.0
+
+# Apply Kubernetes Configuration
+kubectl apply -f target/kubernetes/inventory_store/inventory_store.yaml
+
+# Forward Port to Access Service
+kubectl port-forward svc/inventory-store 9090:9090
 ```
 
-### Kubernetes Deployment
+### Kubernetes Commands
 
 ```bash
-# Apply Kubernetes Configurations
-kubectl apply -f mysql_deployment.yml
-
 # Check MySQL Pods
 kubectl get pods
 
