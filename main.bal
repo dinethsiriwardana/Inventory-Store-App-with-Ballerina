@@ -24,8 +24,21 @@ service /store on new http:Listener(9090) {
     }
     resource function get .()  returns  Item[]|error {
 
-    stream<Item,sql:Error?> itemStream =  self.databaseClient->query(`SELECT * FROM Inventory`);
+        stream<Item,sql:Error?> itemStream =  self.databaseClient->query(`SELECT * FROM Inventory`);
         return from Item item in itemStream select item;
+
+    }
+    resource function get singleitem/[int item_id]()  returns  Item[]|error {
+     
+        stream<Item,sql:Error?> itemStream =  self.databaseClient->query(`SELECT * FROM Inventory Where id = ${item_id}`);
+        return from Item item in itemStream select item;
+
+    }
+    resource function get singleitem()  returns  Item[]|error {
+     
+        stream<Item,sql:Error?> itemStream =  self.databaseClient->query(`SELECT * FROM Inventory Where id = 1`);
+        return from Item item in itemStream select item;
+
     }
 
     resource function post .(@http:Payload Item item) returns error? {
